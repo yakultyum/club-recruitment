@@ -82,7 +82,6 @@ router.get('/my', async (req: Request, res: Response) => {
   }
 })
 
-export default router
 
 // GET /api/applications/club/:clubId — 获取社团的申请列表（管理员）
 router.get('/club/:clubId', async (req: Request, res: Response) => {
