@@ -18,44 +18,32 @@ import seedRouter from './routes/seed.routes'
 const app = express()
 const PORT = process.env.PORT || 3000
 
+// --- CORS 核心修改 ---
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: [
+    'https://club-recruitment-frontend-4s57djq8q-yakultyums-projects.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }))
+
 app.use(express.json())
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })
 })
 
+// 基础路由配置
 app.use('/api/auth', authRouter)
 app.use('/api/profile', profileRouter)
 app.use('/api/clubs', clubRouter)
 app.use('/api/recommendations', recommendationRouter)
 app.use('/api/applications', applicationRouter)
 app.use('/api/notifications', notificationRouter)
-app.use('/api/clubs', statisticsRouter)
-app.use('/api/seed', seedRouter)
-
-app.listen(PORT, () => {
-  console.log(`Backend server running on port ${PORT}`)
-})
-
-export default app
-}))
-app.use(express.json())
-
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() })
-})
-
-app.use('/api/auth', authRouter)
-app.use('/api/profile', profileRouter)
-app.use('/api/clubs', clubRouter)
-app.use('/api/recommendations', recommendationRouter)
-app.use('/api/applications', applicationRouter)
-app.use('/api/notifications', notificationRouter)
-app.use('/api/clubs', statisticsRouter)
+app.use('/api/statistics', statisticsRouter) 
 app.use('/api/seed', seedRouter)
 
 app.listen(PORT, () => {
