@@ -42,3 +42,24 @@ app.listen(PORT, () => {
 })
 
 export default app
+}))
+app.use(express.json())
+
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
+app.use('/api/auth', authRouter)
+app.use('/api/profile', profileRouter)
+app.use('/api/clubs', clubRouter)
+app.use('/api/recommendations', recommendationRouter)
+app.use('/api/applications', applicationRouter)
+app.use('/api/notifications', notificationRouter)
+app.use('/api/clubs', statisticsRouter)
+app.use('/api/seed', seedRouter)
+
+app.listen(PORT, () => {
+  console.log(`Backend server running on port ${PORT}`)
+})
+
+export default app
